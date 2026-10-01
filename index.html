@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nikhil Kudupudi | Data Engineer → ML Engineer</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.css" rel="stylesheet">
   <style>
     :root {
       --ivory: #FDFBF7;
@@ -85,7 +84,67 @@
       padding-top: 80px;
     }
     
-    .hero-content { width: 100%; }
+    .hero-inner {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .hero-content { flex: 1; min-width: 0; }
+
+    /* Profile photo: drop your image at assets/profile_pic.jpg */
+    .hero-photo {
+      flex: 0 0 220px;
+      height: 270px;
+      position: relative;
+      animation: fadeInUp 0.8s ease 0.3s both;
+    }
+
+    .hero-photo::before {
+      content: '';
+      position: absolute;
+      inset: 14px -14px -14px 14px;
+      border: 2px solid var(--gold);
+    }
+
+    .hero-photo .photo-crop,
+    .hero-photo .photo-fallback {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--charcoal);
+    }
+
+    /* Zoom toward the face; tweak scale / origin if the photo changes */
+    .hero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.5);
+      transform-origin: 50% 52%;
+    }
+
+    .hero-photo .photo-fallback {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 4rem;
+      letter-spacing: 4px;
+    }
+
+    .hero-photo.no-photo .photo-crop { display: none; }
+    .hero-photo.no-photo .photo-fallback { display: flex; }
+
+    @media (max-width: 760px) {
+      .hero-inner { flex-direction: column-reverse; align-items: flex-start; }
+      .hero-photo { flex-basis: auto; width: 160px; height: 196px; }
+      .nav-links { display: none; }
+      .hero h1 { font-size: 2.4rem; }
+      .contact-links { flex-wrap: wrap; }
+      .project-card { padding: 28px 24px; }
+    }
     
     .hero-label {
       display: inline-block;
@@ -117,7 +176,8 @@
     
     .metrics {
       display: flex;
-      gap: 48px;
+      flex-wrap: wrap;
+      gap: 24px 48px;
       padding-top: 32px;
       border-top: 1px solid var(--gray-300);
     }
@@ -210,6 +270,25 @@
       margin-bottom: 8px;
     }
     
+    .company-logo {
+      display: inline-flex;
+      align-items: center;
+      height: 52px;
+      padding: 8px 14px;
+      margin-bottom: 14px;
+      background: #fff;
+      border: 1px solid var(--gray-300);
+      border-radius: 4px;
+    }
+
+    .company-logo img {
+      height: 100%;
+      width: auto;
+      max-width: 180px;
+      object-fit: contain;
+      display: block;
+    }
+
     .timeline-item h3 {
       font-size: 1.4rem;
       font-weight: 600;
@@ -299,7 +378,8 @@
     
     .project-metrics {
       display: flex;
-      gap: 32px;
+      flex-wrap: wrap;
+      gap: 16px 32px;
       margin: 24px 0;
       padding: 16px 0;
       border-top: 1px solid var(--gray-300);
@@ -358,6 +438,50 @@
       color: var(--gold);
       font-weight: bold;
     }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      color: var(--charcoal);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      font-family: system-ui, sans-serif;
+      border-bottom: 1px solid var(--gold);
+      padding-bottom: 2px;
+      transition: color 0.3s;
+    }
+
+    .project-card:hover .project-link,
+    .project-link:hover { color: var(--gold); }
+
+    .layer-list {
+      list-style: none;
+      margin: 20px 0;
+      font-family: system-ui, sans-serif;
+      font-size: 0.9rem;
+    }
+
+    .layer-list li {
+      display: flex;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--gray-300);
+      color: var(--gray-700);
+      transition: color 0.4s;
+    }
+
+    .layer-list li:last-child { border-bottom: none; }
+
+    .layer-list strong {
+      color: var(--gold);
+      font-weight: 600;
+      flex: 0 0 96px;
+    }
+
+    .project-card:hover .layer-list li { color: var(--gray-300); border-color: var(--gray-700); }
     
     .other-work {
       margin-top: 64px;
@@ -397,7 +521,7 @@
     /* Skills */
     .skills-container {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
       gap: 40px;
     }
     
@@ -504,12 +628,16 @@
     <div class="container">
       <a href="#" class="logo">NK</a>
       <div class="nav-links">
-        <a href="#journey">Journey</a>
+        <a href="#journey">Experience</a>
+        <a href="#education">Education</a>
         <a href="#projects">Projects</a>
         <a href="#skills">Skills</a>
         <a href="#contact">Contact</a>
       </div>
       <div class="social-links">
+        <a href="mailto:nikhilkudupudi@gmail.com" title="Email">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+        </a>
         <a href="https://github.com/Nikhil-Kudupudi" target="_blank" title="GitHub">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
         </a>
@@ -521,11 +649,11 @@
   </nav>
 
   <section class="hero">
-    <div class="container">
+    <div class="container hero-inner">
       <div class="hero-content">
         <div class="hero-label">Data Engineer → ML Engineer</div>
         <h1>Building the bridge from <span>raw data</span> to <span>intelligent systems</span></h1>
-        <p class="hero-subtitle">I'm Nikhil Kudupudi — transforming complex data challenges into scalable ML pipelines. Currently pursuing my Master's at Northeastern, previously engineering fintech solutions at KFin Technologies.</p>
+        <p class="hero-subtitle">I'm Nikhil Kudupudi — transforming complex data challenges into scalable ML pipelines. Currently pursuing my Master's at Northeastern, most recently building AWS data pipelines as a Data Engineer at Plymouth Rock Assurance.</p>
         <div class="metrics">
           <div class="metric-item">
             <h3>3.9</h3>
@@ -540,35 +668,60 @@
             <p>Records Daily</p>
           </div>
           <div class="metric-item">
-            <h3>2+</h3>
+            <h3>2.5+</h3>
             <p>Years Experience</p>
           </div>
         </div>
+      </div>
+      <div class="hero-photo">
+        <div class="photo-crop"><img src="assets/profile_pic.jpg" alt="Nikhil Kudupudi" onerror="this.closest('.hero-photo').classList.add('no-photo')"></div>
+        <div class="photo-fallback">NK</div>
       </div>
     </div>
   </section>
 
   <section class="section" id="journey">
     <div class="container">
-      <p class="section-label">The Journey</p>
+      <p class="section-label">Experience</p>
       <h2>From Data Pipelines to Machine Learning</h2>
       
       <div class="timeline">
         <div class="timeline-item">
-          <div class="timeline-date">SEP 2024 — PRESENT</div>
-          <h3>Northeastern University</h3>
-          <h4>M.S. Data Analytics Engineering · Boston, MA</h4>
-          <p>Deepening expertise in machine learning, statistical modeling, and MLOps. Building end-to-end systems that bridge data engineering fundamentals with intelligent automation.</p>
+          <div class="timeline-date">JAN 2026 — AUG 2026</div>
+          <div class="company-logo"><img src="assets/Plymouthrock%20logo.svg" alt="Plymouth Rock Assurance logo"></div>
+          <h3>Data Engineer</h3>
+          <h4>Plymouth Rock Assurance · Boston, MA</h4>
+          <p>Custom-built a 6-state address matching pipeline on AWS SageMaker that matches 2M rows each month against 20M+ records, as a cost-effective alternative to Google APIs and other paid address services. Integrated SAP DQM for address standardization and reduced mismatch rates through systematic pattern analysis.</p>
+          <ul class="layer-list">
+            <li><strong>Matching</strong> NLP and probabilistic models score candidate matches, and K-means clustering filters the top rows down to a near-accurate match.</li>
+            <li><strong>Filtering</strong> Addresses pass through a 12-layer, multi-stage filtration process grouped into 4 categories, built with waterfall logic in Polars and PyArrow.</li>
+            <li><strong>Medallion</strong> ETL through bronze, silver and gold layers, delivering partitioned Parquet outputs to S3 at scale.</li>
+            <li><strong>Checks</strong> AWS Glue checks for new data were slow, so Lambda was used to check the pipeline data instead.</li>
+            <li><strong>Orchestrate</strong> Explored EventBridge + Lambda to kick off the pipeline, but it made the pipeline more complicated, so moved back to custom SageMaker Pipelines on ml.t3.medium for continuous, low-cost checks.</li>
+            <li><strong>Config</strong> AWS Secrets Manager and AWS AppConfig manage credentials and data-flow / storage configuration.</li>
+            <li><strong>Insights</strong> Stakeholder dashboards in HTML, PowerPoint and Datawrapper turned pipeline results into actionable insights for business teams.</li>
+          </ul>
           <div class="tag-row">
-            <span class="tag">Machine Learning</span>
-            <span class="tag">MLOps</span>
-            <span class="tag">Deep Learning</span>
-            <span class="tag">Data Mining</span>
+            <span class="tag">AWS SageMaker Pipelines</span>
+            <span class="tag">NLP</span>
+            <span class="tag">Probabilistic Matching</span>
+            <span class="tag">K-means</span>
+            <span class="tag">Polars</span>
+            <span class="tag">PyArrow</span>
+            <span class="tag">SAP DQM</span>
+            <span class="tag">S3</span>
+            <span class="tag">Lambda</span>
+            <span class="tag">AWS Glue</span>
+            <span class="tag">Secrets Manager</span>
+            <span class="tag">AppConfig</span>
+            <span class="tag">Parquet</span>
+            <span class="tag">Datawrapper</span>
           </div>
         </div>
-        
+
         <div class="timeline-item">
           <div class="timeline-date">AUG 2023 — JUL 2024</div>
+          <div class="company-logo"><img src="assets/KFin_Technologies_Logo.jpg" alt="KFin Technologies logo"></div>
           <h3>Fintech Engineer</h3>
           <h4>KFin Technologies · Hyderabad, India</h4>
           <p>Designed ETL workflows powering forecasting systems. Created dashboards that cut decision time by 40% — realizing the power of data-driven insights and wanting to push further into ML.</p>
@@ -582,6 +735,7 @@
         
         <div class="timeline-item">
           <div class="timeline-date">NOV 2022 — AUG 2023</div>
+          <div class="company-logo"><img src="assets/webileapps.png" alt="WebileApps logo"></div>
           <h3>Software Engineer</h3>
           <h4>WebileApps · Hyderabad, India</h4>
           <p>First exposure to data at scale. Automated collection and cleansing processes, reducing analyst workload by 25%. This sparked my passion for building systems that transform raw data into actionable insights.</p>
@@ -596,12 +750,81 @@
     </div>
   </section>
 
+  <section class="section" id="education">
+    <div class="container">
+      <p class="section-label">Education</p>
+      <h2>The academic foundation</h2>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">SEP 2024 — PRESENT</div>
+          <div class="company-logo"><img src="assets/northeastern-edu-brandmark.svg" alt="Northeastern University logo"></div>
+          <h3>Northeastern University</h3>
+          <h4>M.S. Data Analytics Engineering · Boston, MA · GPA 3.9</h4>
+          <p>Deepening expertise in machine learning, statistical modeling, and MLOps. Building end-to-end systems that bridge data engineering fundamentals with intelligent automation.</p>
+          <div class="tag-row">
+            <span class="tag">Machine Learning</span>
+            <span class="tag">MLOps</span>
+            <span class="tag">Deep Learning</span>
+            <span class="tag">Data Mining</span>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">2018 — 2022</div>
+          <h3>GMR Institute of Technology</h3>
+          <h4>B.Tech Computer Science and Engineering · India · CGPA 8.8 / 10</h4>
+          <p>Built a strong computer science foundation, developing skills in microservices, web backend development and REST APIs, machine learning basics, and virtualisation concepts.</p>
+          <div class="tag-row">
+            <span class="tag">Microservices</span>
+            <span class="tag">Backend Development</span>
+            <span class="tag">REST APIs</span>
+            <span class="tag">ML Basics</span>
+            <span class="tag">Virtualisation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="projects">
     <div class="container">
       <p class="section-label">Selected Work</p>
       <h2>Projects that tell the story</h2>
       
       <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-label">Data Engineering · Financial Analytics</div>
+          <h3>SEC EDGAR Financial Dashboard</h3>
+          <p>A common dashboard to look up any organisation by ticker and see its SEC filings and financial metrics — net income, operating costs and more — sourced from annual 10-K and quarterly 10-Q reports and mapped to US-GAAP concepts.</p>
+          <div class="arch-flow">
+            <span>SEC EDGAR API</span><span class="arrow">→</span><span>Raw</span><span class="arrow">→</span><span>Bronze</span><span class="arrow">→</span><span>Silver</span><span class="arrow">→</span><span>Gold</span><span class="arrow">→</span><span>Dashboard</span>
+          </div>
+          <ul class="layer-list">
+            <li><strong>Ingest</strong> Pull company facts and filings from the SEC EDGAR API and land the raw JSON as-is.</li>
+            <li><strong>Bronze</strong> Clean and format the raw responses into a consistent, typed structure.</li>
+            <li><strong>Silver</strong> Flatten the JSON into PySpark DataFrames and extract US-GAAP features and calculations.</li>
+            <li><strong>Gold</strong> Compute and aggregate quarterly and annual metrics per ticker, ready to serve.</li>
+            <li><strong>Orchestrate</strong> Airflow / Prefect schedules daily or monthly runs as filings and business needs change.</li>
+            <li><strong>Serve</strong> Dashboard deployed on EC2, or published as static HTML via GitHub Pages.</li>
+          </ul>
+          <p>Storage and compute run on Databricks with PySpark, chosen over Polars so the pipeline keeps scaling as the volume of filings grows.</p>
+          <div class="tag-row">
+            <span class="tag">SEC EDGAR API</span>
+            <span class="tag">Databricks</span>
+            <span class="tag">PySpark</span>
+            <span class="tag">Polars</span>
+            <span class="tag">Medallion Architecture</span>
+            <span class="tag">US-GAAP</span>
+            <span class="tag">Airflow / Prefect</span>
+            <span class="tag">AWS EC2</span>
+          </div>
+          <a href="https://github.com/Nikhil-Kudupudi/SEC_EDGAR" target="_blank" rel="noopener" class="project-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            View on GitHub
+          </a>
+        </div>
+
         <div class="project-card">
           <div class="project-label">Data Engineering</div>
           <h3>Real-Time News Analytics</h3>
@@ -682,18 +905,39 @@
         </div>
         
         <div class="project-card">
-          <div class="project-label">Full-Stack · Automation</div>
-          <h3>Employment System Dashboard</h3>
-          <p>Backend system for applicant onboarding with Google APIs, DocuSign flow automation, document status tracking, and automated email alerts.</p>
-          <div class="arch-flow">
-            <span>Client</span><span class="arrow">→</span><span>APIs</span><span class="arrow">→</span><span>DocuSign</span><span class="arrow">→</span><span>Status Engine</span><span class="arrow">→</span><span>Alerts</span>
+          <div class="project-label">Full-Stack · Workflow Automation · Fintech</div>
+          <h3>Investment Policy Automation</h3>
+          <p>An end-to-end onboarding and document automation platform for portfolio management, used by investment companies. From a user's government PAN ID and date of birth, it retrieves their legal status, risk measures, address and other application details, fills the application automatically, and generates documents based on the portfolio funds chosen. It then routes them for signing between users and authorised signatories, driven by cron jobs, user roles and status. A paper workflow that used to take weeks to a month now takes 1 day, with a human in the loop.</p>
+          <div class="project-metrics">
+            <div class="project-metric"><span>+70%</span><small>Applications</small></div>
+            <div class="project-metric"><span>88+</span><small>Clients</small></div>
+            <div class="project-metric"><span>Weeks → 1 day</span><small>Turnaround</small></div>
+            <div class="project-metric"><span>+25%</span><small>Workflow automation</small></div>
           </div>
+          <div class="arch-flow">
+            <span>PAN + DOB</span><span class="arrow">→</span><span>Gov Services</span><span class="arrow">→</span><span>Penny Drop</span><span class="arrow">→</span><span>Auto-fill</span><span class="arrow">→</span><span>PDF Docs</span><span class="arrow">→</span><span>DocuSign</span><span class="arrow">→</span><span>Exec Dashboard</span>
+          </div>
+          <ul class="layer-list">
+            <li><strong>Verify</strong> Integrated government services for financial clients, plus penny drop validation of the end user's bank account.</li>
+            <li><strong>Generate</strong> TypeScript / Express.js workflows auto-fill the forms and render PDFs based on the selected portfolio funds.</li>
+            <li><strong>Sign</strong> DocuSign-based legal signing routed between users and authorised signatories, triggered by cron jobs, roles and status.</li>
+            <li><strong>Files</strong> Python file management with encryption and decryption of sensitive documents.</li>
+            <li><strong>Platform</strong> Microservices with TypeScript REST APIs behind an Nginx reverse proxy, and a React UI.</li>
+            <li><strong>Track</strong> An executive dashboard tracks each application's progress and status. Automated status checks raised workflow automation by 25% over the earlier manual status checks.</li>
+          </ul>
           <div class="tag-row">
-            <span class="tag">JavaScript</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">Express.js</span>
+            <span class="tag">React</span>
             <span class="tag">Python</span>
-            <span class="tag">Google APIs</span>
+            <span class="tag">REST APIs</span>
+            <span class="tag">Microservices</span>
+            <span class="tag">Nginx</span>
+            <span class="tag">Cron</span>
             <span class="tag">DocuSign</span>
-            <span class="tag">Streamlit</span>
+            <span class="tag">PDF Rendering</span>
+            <span class="tag">Encryption</span>
+            <span class="tag">Penny Drop</span>
           </div>
         </div>
       </div>
@@ -734,18 +978,30 @@
             <li>XGBoost</li>
             <li>PyTorch</li>
             <li>MLflow</li>
-            <li>FAISS / RAG</li>
+            <li>Probabilistic Models</li>
+            <li>K-means Clustering</li>
+          </ul>
+        </div>
+
+        <div class="skill-category">
+          <h4>AI Engineering</h4>
+          <ul class="skill-list">
+            <li>RAG Architecture</li>
+            <li>LLM Applications</li>
+            <li>Embeddings / FAISS</li>
+            <li>Vector Stores</li>
+            <li>NLP</li>
           </ul>
         </div>
         
         <div class="skill-category">
           <h4>Cloud & DevOps</h4>
           <ul class="skill-list">
-            <li>AWS (S3, Glue, Redshift)</li>
+            <li>AWS</li>
             <li>GCP (Cloud Run)</li>
             <li>Docker</li>
+            <li>Git / CI/CD</li>
             <li>GitHub Actions</li>
-            <li>Terraform</li>
           </ul>
         </div>
       </div>
@@ -758,7 +1014,7 @@
       <h2>Building something interesting?</h2>
       <p>I'm always open to discussing data engineering, MLOps, or new opportunities.</p>
       <div class="contact-links">
-        <a href="mailto:kudupudi.n@northeastern.edu" class="contact-btn">
+        <a href="mailto:nikhilkudupudi@gmail.com" class="contact-btn">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
           Email
         </a>
@@ -775,7 +1031,7 @@
   </section>
 
   <footer>
-    <p>© 2025 Nikhil Kudupudi · Built with intention</p>
+    <p>© 2026 Nikhil Kudupudi · Built with intention</p>
   </footer>
 
   <script>
