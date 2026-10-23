@@ -476,6 +476,19 @@
 
     .project-shots img { display: block; width: 100%; height: auto; }
 
+    .project-diagram {
+      display: block;
+      margin: 20px 0;
+      border: 1px solid var(--gray-300);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .project-diagram:hover { border-color: var(--gold); transform: translateY(-2px); }
+
+    .project-diagram img { display: block; width: 100%; height: auto; }
+
     @media (max-width: 600px) {
       .project-shots { grid-template-columns: 1fr; }
     }
@@ -864,6 +877,9 @@
             <li><strong>Serve</strong> Streamlit dashboard reads gold only, with annual and quarterly views, trends, margins, cash flow, leverage and a lineage table.</li>
           </ul>
           <p>Tested on Apple (about 25k fact rows, 503 us-gaap tags, FY2009 to FY2025). Next steps: dbt models for gold, orchestration, automated tests and more companies.</p>
+          <a class="project-diagram" href="assets/sec_edgar/sec-edgar-financial-lakehouse.svg" target="_blank" rel="noopener">
+            <img src="assets/sec_edgar/sec-edgar-financial-lakehouse.svg" alt="SEC EDGAR Financial Lakehouse medallion architecture diagram: SEC EDGAR API to Bronze, Silver, Gold and Streamlit" loading="lazy">
+          </a>
           <div class="project-shots">
             <a href="assets/sec_edgar/dashboard_page1.png" target="_blank" rel="noopener"><img src="assets/sec_edgar/dashboard_page1.png" alt="SEC EDGAR dashboard page 1" loading="lazy"></a>
             <a href="assets/sec_edgar/dashboard_page2.png" target="_blank" rel="noopener"><img src="assets/sec_edgar/dashboard_page2.png" alt="SEC EDGAR dashboard page 2" loading="lazy"></a>
