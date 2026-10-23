@@ -457,6 +457,29 @@
     .project-card:hover .project-link,
     .project-link:hover { color: var(--gold); }
 
+    .project-shots {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .project-shots a {
+      display: block;
+      border: 1px solid var(--gray-300);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .project-shots a:hover { border-color: var(--gold); transform: translateY(-2px); }
+
+    .project-shots img { display: block; width: 100%; height: auto; }
+
+    @media (max-width: 600px) {
+      .project-shots { grid-template-columns: 1fr; }
+    }
+
     .layer-list {
       list-style: none;
       margin: 20px 0;
@@ -829,29 +852,31 @@
       <div class="projects-grid">
         <div class="project-card">
           <div class="project-label">Data Engineering · Financial Analytics</div>
-          <h3>SEC EDGAR Financial Dashboard</h3>
-          <p>A common dashboard to look up any organisation by ticker and see its SEC filings and financial metrics — net income, operating costs and more — sourced from annual 10-K and quarterly 10-Q reports and mapped to US-GAAP concepts.</p>
+          <h3>SEC EDGAR Financial Lakehouse</h3>
+          <p>An end-to-end medallion pipeline that turns SEC XBRL filings (10-K / 10-Q) into executive KPIs such as revenue, margins, free cash flow and net worth. Every number on the Streamlit dashboard traces back to its source filing, and restated figures automatically override the originals.</p>
           <div class="arch-flow">
-            <span>SEC EDGAR API</span><span class="arrow">→</span><span>Raw</span><span class="arrow">→</span><span>Bronze</span><span class="arrow">→</span><span>Silver</span><span class="arrow">→</span><span>Gold</span><span class="arrow">→</span><span>Dashboard</span>
+            <span>SEC EDGAR API</span><span class="arrow">→</span><span>Bronze</span><span class="arrow">→</span><span>Silver</span><span class="arrow">→</span><span>Gold</span><span class="arrow">→</span><span>Streamlit</span>
           </div>
           <ul class="layer-list">
-            <li><strong>Ingest</strong> Pull company facts and filings from the SEC EDGAR API and land the raw JSON as-is.</li>
-            <li><strong>Bronze</strong> Clean and format the raw responses into a consistent, typed structure.</li>
-            <li><strong>Silver</strong> Flatten the JSON into PySpark DataFrames and extract US-GAAP features and calculations.</li>
-            <li><strong>Gold</strong> Compute and aggregate quarterly and annual metrics per ticker, ready to serve.</li>
-            <li><strong>Orchestrate</strong> Airflow / Prefect schedules daily or monthly runs as filings and business needs change.</li>
-            <li><strong>Serve</strong> Dashboard deployed on EC2, or published as static HTML via GitHub Pages.</li>
+            <li><strong>Bronze</strong> Flatten company-facts JSON to one row per reported value and write schema-enforced Parquet to S3, partitioned by fiscal year and form, with idempotent per-company reloads.</li>
+            <li><strong>Silver</strong> PySpark keeps 10-K/10-Q filings, dedupes restatements (latest filed wins), classifies 3/6/9/12-month periods and assigns each value its own fiscal period, not the filing's.</li>
+            <li><strong>Gold</strong> A config-driven catalog maps 21 metrics across changing us-gaap tags. Quarterly flows are derived from year-to-date values with window functions, and 15+ KPIs keep row-level lineage to the filing accession number.</li>
+            <li><strong>Serve</strong> Streamlit dashboard reads gold only, with annual and quarterly views, trends, margins, cash flow, leverage and a lineage table.</li>
           </ul>
-          <p>Storage and compute run on Databricks with PySpark, chosen over Polars so the pipeline keeps scaling as the volume of filings grows.</p>
+          <p>Tested on Apple (about 25k fact rows, 503 us-gaap tags, FY2009 to FY2025). Next steps: dbt models for gold, orchestration, automated tests and more companies.</p>
+          <div class="project-shots">
+            <a href="assets/sec_edgar/dashboard_page1.png" target="_blank" rel="noopener"><img src="assets/sec_edgar/dashboard_page1.png" alt="SEC EDGAR dashboard page 1" loading="lazy"></a>
+            <a href="assets/sec_edgar/dashboard_page2.png" target="_blank" rel="noopener"><img src="assets/sec_edgar/dashboard_page2.png" alt="SEC EDGAR dashboard page 2" loading="lazy"></a>
+          </div>
           <div class="tag-row">
-            <span class="tag">SEC EDGAR API</span>
-            <span class="tag">Databricks</span>
+            <span class="tag">Python</span>
             <span class="tag">PySpark</span>
             <span class="tag">Polars</span>
+            <span class="tag">AWS S3</span>
+            <span class="tag">Parquet</span>
             <span class="tag">Medallion Architecture</span>
-            <span class="tag">US-GAAP</span>
-            <span class="tag">Airflow / Prefect</span>
-            <span class="tag">AWS EC2</span>
+            <span class="tag">Streamlit</span>
+            <span class="tag">XBRL / US-GAAP</span>
           </div>
           <a href="https://github.com/Nikhil-Kudupudi/SEC_EDGAR" target="_blank" rel="noopener" class="project-link">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
