@@ -901,6 +901,42 @@
         </div>
 
         <div class="project-card">
+          <div class="project-label">AI Systems · LLM Agents · Edge Full-Stack</div>
+          <h3>Job Copilot</h3>
+          <p>Paste a job description and get an honest fit score, a tailored one-page resume as both PDF and editable .docx, then one click archives the exact file you reviewed and logs the application to the Google Sheet the tracker dashboard already reads. Two LLM agents run on Cloudflare Pages Functions, while the documents render in the browser — so the bytes previewed are the bytes archived.</p>
+          <div class="arch-flow">
+            <span>Job Posting</span><span class="arrow">→</span><span>Extract Agent</span><span class="arrow">→</span><span>Deterministic Scorer</span><span class="arrow">→</span><span>Tailor Agent</span><span class="arrow">→</span><span>PDF / DOCX</span><span class="arrow">→</span><span>R2 + Sheets</span>
+          </div>
+          <div class="project-metrics">
+            <div class="project-metric"><span>81/81/81</span><small>Repeatable score, was 65/68/72</small></div>
+            <div class="project-metric"><span>200 runs</span><small>Scoring stability verified</small></div>
+            <div class="project-metric"><span>276</span><small>Scored vocabulary terms</small></div>
+            <div class="project-metric"><span>1 page</span><small>Guaranteed, never spills</small></div>
+          </div>
+          <ul class="layer-list">
+            <li><strong>Deterministic scoring</strong> The model’s own fit score was not repeatable — three identical requests at temperature 0 came back 65 / 68 / 72, and the 72 crossed the apply threshold while the others said “maybe”. The score is now a pure function of (posting, profile): skill coverage 60, seniority fit 25, domain fit 15, with clearance and sponsorship blockers applied as a multiplier. The rationale is generated from the same numbers, so it can never contradict the score.</li>
+            <li><strong>Requirement parsing</strong> A years figure only counts when it sits in requirement context, so “profitable for over 15 years” no longer reads as a 15-year requirement, and internships skip the years check entirely rather than penalising over-qualification.</li>
+            <li><strong>One-page guarantee</strong> Prompt budgets first, then an authoritative clamp that truncates over-budget content and re-pins company, dates, degree and GPA verbatim from the profile, so a reworded fact can never reach the page. The PDF renderer measures its own layout and steps the type scale down before it would spill to a second page.</li>
+            <li><strong>Provider resilience</strong> An OpenAI-compatible adapter retries with exponential backoff, falls through a model chain when a free-tier model stays 503 or is retired with a 404, and re-asks in plain JSON mode when a provider rejects structured output — so outages degrade instead of failing the request.</li>
+            <li><strong>Tracker dashboard</strong> KPI tiles, a per-month trend and ranked breakdowns over the same sheet, with location spellings grouped into real buckets and status rendered as accessible tiles after Offer and Rejected measured a colour-blind ΔE of 4.1.</li>
+          </ul>
+          <div class="tag-row">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Cloudflare Pages Functions</span>
+            <span class="tag">Cloudflare R2</span>
+            <span class="tag">Workers Runtime</span>
+            <span class="tag">LLM Agents</span>
+            <span class="tag">Structured Outputs</span>
+            <span class="tag">Gemini API</span>
+            <span class="tag">Prompt Engineering</span>
+            <span class="tag">jsPDF</span>
+            <span class="tag">docx</span>
+            <span class="tag">Google Apps Script</span>
+            <span class="tag">Deterministic Scoring</span>
+          </div>
+        </div>
+
+        <div class="project-card">
           <div class="project-label">Data Engineering</div>
           <h3>Real-Time News Analytics</h3>
           <p>End-to-end streaming pipeline with dynamic topic ingestion, sentiment analysis, and multi-platform visualizations for actionable market insights.</p>
@@ -1028,6 +1064,10 @@
             <li>LLM Applications</li>
             <li>Embeddings / FAISS</li>
             <li>Vector Stores</li>
+            <li>LLM Agent Pipelines</li>
+            <li>Structured Outputs</li>
+            <li>Prompt Engineering</li>
+            <li>Deterministic Evaluation</li>
             <li>NLP</li>
           </ul>
         </div>
@@ -1037,9 +1077,23 @@
           <ul class="skill-list">
             <li>AWS</li>
             <li>GCP (Cloud Run)</li>
+            <li>Cloudflare Workers / Pages</li>
+            <li>Cloudflare R2</li>
             <li>Docker</li>
             <li>Git / CI/CD</li>
             <li>GitHub Actions</li>
+          </ul>
+        </div>
+
+        <div class="skill-category">
+          <h4>Languages &amp; Backend</h4>
+          <ul class="skill-list">
+            <li>Python</li>
+            <li>SQL</li>
+            <li>JavaScript / TypeScript</li>
+            <li>Express.js</li>
+            <li>React</li>
+            <li>REST APIs</li>
           </ul>
         </div>
       </div>
