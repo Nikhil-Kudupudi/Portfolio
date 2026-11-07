@@ -796,6 +796,42 @@
       .node:not(:last-child)::after, .node.now .dot { animation: none; }
     }
 
+    /* ===== Tighter content: collapsible detail ===== */
+    .project-summary { margin-bottom: 20px; }
+    .project-card:not(:hover) .tag { background: #fff; }
+    .more { margin: 8px 0 24px; border-top: 1px solid var(--gray-300); }
+    .more > summary {
+      display: flex; align-items: center; gap: 10px; padding: 14px 0; cursor: pointer; list-style: none;
+      font: 600 0.9rem/1.3 system-ui, sans-serif; color: var(--accent-ink);
+    }
+    .more > summary::-webkit-details-marker { display: none; }
+    .more > summary::after {
+      content: ''; width: 7px; height: 7px; margin-top: -3px;
+      border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+      transform: rotate(45deg); transition: transform 0.25s var(--ease-out);
+    }
+    .more[open] > summary::after { transform: rotate(-135deg); margin-top: 3px; }
+    .more > summary:focus-visible { outline: 2px solid var(--teal); outline-offset: 4px; }
+    .more-body { padding-top: 8px; animation: more-in 0.3s var(--ease-out); }
+    @keyframes more-in { from { opacity: 0; transform: translateY(-6px); } }
+    .project-card:hover .more { border-top-color: var(--gray-700); }
+
+    .skill-rows { display: grid; gap: 18px; margin-bottom: 36px; }
+    .skill-row { display: grid; grid-template-columns: 180px 1fr; gap: 16px; align-items: center; }
+    .skill-row h3 {
+      font: 600 0.8rem/1.3 system-ui, sans-serif; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent-ink);
+    }
+    .chips { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+    .chips li {
+      padding: 8px 14px; border: 1px solid rgba(143, 205, 184, 0.4); border-radius: 999px;
+      font: 0.92rem/1.2 system-ui, sans-serif; color: #E6EEF1;
+      transition: background-color 0.2s, color 0.2s, transform 0.2s var(--ease-out);
+    }
+    .chips li:hover { background: var(--sage); color: var(--ink); transform: translateY(-2px); }
+    #skills .more { border-top-color: rgba(255, 255, 255, 0.15); margin-bottom: 0; }
+    @media (max-width: 720px) { .skill-row { grid-template-columns: 1fr; gap: 10px; } }
+    @media (prefers-reduced-motion: reduce) { .more-body { animation: none; } .chips li:hover { transform: none; } }
+
     /* ===== Interactivity layer ===== */
     .hero { position: relative; }
     .hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
@@ -1103,10 +1139,13 @@
         <div class="project-card">
           <h3>SEC EDGAR Financial Lakehouse</h3>
           <div class="project-label">Data Engineering · Financial Analytics</div>
-          <p>An end-to-end medallion pipeline that turns SEC XBRL filings (10-K / 10-Q) into executive KPIs such as revenue, margins, free cash flow and net worth. Every number on the Streamlit dashboard traces back to its source filing, and restated figures automatically override the originals.</p>
+          <p class="project-summary">A medallion pipeline that turns SEC filings into executive KPIs, with every dashboard number traceable to its source filing.</p>
           <div class="arch-flow">
             <span>SEC EDGAR API</span><span class="arrow">→</span><span>Bronze</span><span class="arrow">→</span><span>Silver</span><span class="arrow">→</span><span>Gold</span><span class="arrow">→</span><span>Streamlit</span>
           </div>
+          <details class="more"><summary>How it works</summary>
+          <div class="more-body">
+          <p>An end-to-end medallion pipeline that turns SEC XBRL filings (10-K / 10-Q) into executive KPIs such as revenue, margins, free cash flow and net worth. Every number on the Streamlit dashboard traces back to its source filing, and restated figures automatically override the originals.</p>
           <ul class="layer-list">
             <li><strong>Bronze</strong> Flatten company-facts JSON to one row per reported value and write schema-enforced Parquet to S3, partitioned by fiscal year and form, with idempotent per-company reloads.</li>
             <li><strong>Silver</strong> PySpark keeps 10-K/10-Q filings, dedupes restatements (latest filed wins), classifies 3/6/9/12-month periods and assigns each value its own fiscal period, not the filing's.</li>
@@ -1121,6 +1160,8 @@
             <a href="assets/sec_edgar/dashboard_page1.png" target="_blank" rel="noopener"><img src="assets/sec_edgar/dashboard_page1.png" loading="lazy" decoding="async" alt="SEC EDGAR dashboard page 1"></a>
             <a href="assets/sec_edgar/dashboard_page2.png" target="_blank" rel="noopener"><img src="assets/sec_edgar/dashboard_page2.png" loading="lazy" decoding="async" alt="SEC EDGAR dashboard page 2"></a>
           </div>
+          </div>
+          </details>
           <div class="tag-row">
             <span class="tag">Python</span>
             <span class="tag">PySpark</span>
@@ -1140,7 +1181,7 @@
         <div class="project-card">
           <h3>Job Copilot</h3>
           <div class="project-label">AI Systems · LLM Agents · Edge Full-Stack</div>
-          <p>Paste a job description and get an honest fit score, a tailored one-page resume as both PDF and editable .docx, then one click archives the exact file you reviewed and logs the application to the Google Sheet the tracker dashboard already reads. Two LLM agents run on Cloudflare Pages Functions, while the documents render in the browser — so the bytes previewed are the bytes archived.</p>
+          <p class="project-summary">Paste a job description, get an honest fit score and a tailored one-page resume (PDF and .docx), then archive and log it in one click.</p>
           <div class="arch-flow">
             <span>Job Posting</span><span class="arrow">→</span><span>Extract Agent</span><span class="arrow">→</span><span>Deterministic Scorer</span><span class="arrow">→</span><span>Tailor Agent</span><span class="arrow">→</span><span>PDF / DOCX</span><span class="arrow">→</span><span>R2 + Sheets</span>
           </div>
@@ -1150,6 +1191,9 @@
             <div class="project-metric"><span>276</span><small>Scored vocabulary terms</small></div>
             <div class="project-metric"><span>1 page</span><small>Guaranteed, never spills</small></div>
           </div>
+          <details class="more"><summary>How it works</summary>
+          <div class="more-body">
+          <p>Paste a job description and get an honest fit score, a tailored one-page resume as both PDF and editable .docx, then one click archives the exact file you reviewed and logs the application to the Google Sheet the tracker dashboard already reads. Two LLM agents run on Cloudflare Pages Functions, while the documents render in the browser — so the bytes previewed are the bytes archived.</p>
           <ul class="layer-list">
             <li><strong>Deterministic scoring</strong> The model’s own fit score was not repeatable — three identical requests at temperature 0 came back 65 / 68 / 72, and the 72 crossed the apply threshold while the others said “maybe”. The score is now a pure function of (posting, profile): skill coverage 60, seniority fit 25, domain fit 15, with clearance and sponsorship blockers applied as a multiplier. The rationale is generated from the same numbers, so it can never contradict the score.</li>
             <li><strong>Requirement parsing</strong> A years figure only counts when it sits in requirement context, so “profitable for over 15 years” no longer reads as a 15-year requirement, and internships skip the years check entirely rather than penalising over-qualification.</li>
@@ -1160,6 +1204,8 @@
           <a class="project-diagram" href="assets/job_copilot/tracker-dashboard.jpg" target="_blank" rel="noopener">
             <img src="assets/job_copilot/tracker-dashboard.jpg" loading="lazy" decoding="async" alt="Job Copilot tracker dashboard: KPI tiles for applications, status tiles, applications per month, and work arrangement and employment type breakdowns">
           </a>
+          </div>
+          </details>
           <div class="tag-row">
             <span class="tag">JavaScript</span>
             <span class="tag">Cloudflare Pages Functions</span>
@@ -1272,7 +1318,15 @@
     <div class="container">
       <h2>The technical foundation</h2>
       
-      <div class="skills-container">
+            <div class="skill-rows">
+        <div class="skill-row"><h3>Languages &amp; Backend</h3><ul class="chips"><li>Python</li><li>SQL</li><li>JavaScript / TypeScript</li><li>REST APIs</li></ul></div>
+        <div class="skill-row"><h3>Data Engineering</h3><ul class="chips"><li>Apache Kafka</li><li>Spark / PySpark</li><li>Airflow / Prefect</li><li>dbt</li></ul></div>
+        <div class="skill-row"><h3>AI Engineering</h3><ul class="chips"><li>LLM Agent Pipelines</li><li>RAG Architecture</li><li>Structured Outputs</li><li>Prompt Engineering</li></ul></div>
+        <div class="skill-row"><h3>Cloud &amp; DevOps</h3><ul class="chips"><li>AWS</li><li>GCP</li><li>Cloudflare Workers</li><li>Docker</li></ul></div>
+      </div>
+      <details class="more skills-more"><summary>All skills</summary>
+        <div class="more-body">
+<div class="skills-container">
         <div class="skill-category">
           <h3>Data Engineering</h3>
           <ul class="skill-list">
@@ -1335,7 +1389,9 @@
             <li>REST APIs</li>
           </ul>
         </div>
-      </div>
+</div>
+        </div>
+      </details>
     </div>
   </section>
 
@@ -1561,7 +1617,7 @@
       addEventListener('pointermove', e => {
         mx = e.clientX; my = e.clientY;
         document.body.classList.add('cursor-on');
-        ring.classList.toggle('is-hover', !!e.target.closest('a, button, .project-card, .tag'));
+        ring.classList.toggle('is-hover', !!e.target.closest('a, button, summary, .project-card, .tag, .chips li'));
       }, { passive: true });
       addEventListener('pointerdown', () => ring.classList.add('is-down'));
       addEventListener('pointerup', () => ring.classList.remove('is-down'));
