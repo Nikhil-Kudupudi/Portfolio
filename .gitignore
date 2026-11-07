@@ -2,3 +2,5 @@
 .aider-desk/
 .impeccable/
 .claude/
+# Playwright MCP screenshots and logs
+.playwright-mcp/
