@@ -14,7 +14,20 @@
       --gray-300: #D4D0C8;
       --gray-500: #8A8578;
       --gray-700: #4A4A4A;
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+      /* text-safe variants on light backgrounds (4.5:1+); bright values restored on dark surfaces */
+      --gold-ink: #7F6409;
+      --muted: #6F6B60;
     }
+
+    .contact-section, footer, .project-card:hover, .tag:hover, .other-work-list span:hover {
+      --gold-ink: #C9A227;
+      --muted: #8A8578;
+    }
+
+    section[id] { scroll-margin-top: 64px; }
+
+    a:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
     
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
@@ -65,16 +78,16 @@
       transition: color 0.3s;
     }
     
-    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover { color: var(--gold-ink); }
     
     .social-links { display: flex; gap: 16px; }
     
     .social-links a {
-      color: var(--gray-500);
+      color: var(--muted);
       transition: color 0.3s;
     }
     
-    .social-links a:hover { color: var(--gold); }
+    .social-links a:hover { color: var(--gold-ink); }
     
     /* Hero Section */
     .hero {
@@ -97,7 +110,7 @@
       flex: 0 0 220px;
       height: 270px;
       position: relative;
-      animation: fadeInUp 0.8s ease 0.3s both;
+      animation: fadeInUp 0.6s var(--ease-out) 0.2s both;
     }
 
     .hero-photo::before {
@@ -129,7 +142,7 @@
       display: none;
       align-items: center;
       justify-content: center;
-      color: var(--gold);
+      color: var(--gold-ink);
       font-size: 4rem;
       letter-spacing: 4px;
     }
@@ -146,18 +159,6 @@
       .project-card { padding: 28px 24px; }
     }
     
-    .hero-label {
-      display: inline-block;
-      background: var(--charcoal);
-      color: var(--gold);
-      padding: 6px 16px;
-      font-size: 0.75rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 24px;
-      font-family: system-ui, sans-serif;
-    }
-    
     .hero h1 {
       font-size: 3.5rem;
       font-weight: 400;
@@ -165,7 +166,7 @@
       margin-bottom: 24px;
     }
     
-    .hero h1 span { color: var(--gold); }
+    .hero h1 span { color: var(--gold-ink); }
     
     .hero-subtitle {
       font-size: 1.25rem;
@@ -182,16 +183,16 @@
       border-top: 1px solid var(--gray-300);
     }
     
-    .metric-item h3 {
+    .metric-item .metric-value {
       font-size: 2.5rem;
       font-weight: 400;
-      color: var(--gold);
+      color: var(--gold-ink);
       font-family: system-ui, sans-serif;
     }
     
     .metric-item p {
       font-size: 0.85rem;
-      color: var(--gray-500);
+      color: var(--muted);
       text-transform: uppercase;
       letter-spacing: 1px;
       font-family: system-ui, sans-serif;
@@ -201,22 +202,13 @@
     .section {
       padding: 120px 0;
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      transform: translateY(16px);
+      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
     }
     
     .section.visible {
       opacity: 1;
       transform: translateY(0);
-    }
-    
-    .section-label {
-      font-size: 0.75rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 16px;
-      font-family: system-ui, sans-serif;
     }
     
     .section h2 {
@@ -264,7 +256,7 @@
     
     .timeline-date {
       font-size: 0.8rem;
-      color: var(--gold);
+      color: var(--gold-ink);
       letter-spacing: 1px;
       font-family: system-ui, sans-serif;
       margin-bottom: 8px;
@@ -297,7 +289,7 @@
     
     .timeline-item h4 {
       font-size: 1rem;
-      color: var(--gray-500);
+      color: var(--muted);
       font-weight: 400;
       margin-bottom: 16px;
     }
@@ -318,12 +310,12 @@
       font-size: 0.75rem;
       font-family: system-ui, sans-serif;
       border-radius: 2px;
-      transition: all 0.3s;
+      transition: background-color 0.2s, color 0.2s;
     }
-    
+
     .tag:hover {
       background: var(--charcoal);
-      color: var(--gold);
+      color: var(--gold-ink);
     }
     
     /* Projects */
@@ -336,9 +328,9 @@
       background: var(--gray-100);
       padding: 40px;
       border-left: 4px solid var(--gold);
-      transition: all 0.4s;
+      transition: background-color 0.3s, color 0.3s, transform 0.3s var(--ease-out);
     }
-    
+
     .project-card:hover {
       background: var(--charcoal);
       color: var(--ivory);
@@ -350,16 +342,16 @@
     .project-card:hover p { color: var(--ivory); }
     
     .project-card:hover .tag {
-      background: var(--gray-700);
-      color: var(--gold);
+      background: #333;
+      color: var(--gold-ink);
     }
     
     .project-label {
       font-size: 0.7rem;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 12px;
+      color: var(--gold-ink);
+      margin: -8px 0 16px;
       font-family: system-ui, sans-serif;
     }
     
@@ -391,13 +383,13 @@
     .project-metric span {
       display: block;
       font-size: 1.5rem;
-      color: var(--gold);
+      color: var(--gold-ink);
       font-family: system-ui, sans-serif;
     }
     
     .project-metric small {
       font-size: 0.75rem;
-      color: var(--gray-500);
+      color: var(--muted);
       text-transform: uppercase;
       letter-spacing: 1px;
       font-family: system-ui, sans-serif;
@@ -430,12 +422,12 @@
     
     .project-card:hover .arch-flow span:not(.arrow) {
       background: var(--gray-700);
-      color: var(--gold);
+      color: var(--gold-ink);
       border-color: var(--gray-700);
     }
     
     .arch-flow .arrow {
-      color: var(--gold);
+      color: var(--gold-ink);
       font-weight: bold;
     }
 
@@ -455,7 +447,7 @@
     }
 
     .project-card:hover .project-link,
-    .project-link:hover { color: var(--gold); }
+    .project-link:hover { color: var(--gold-ink); }
 
     .project-shots {
       display: grid;
@@ -512,7 +504,7 @@
     .layer-list li:last-child { border-bottom: none; }
 
     .layer-list strong {
-      color: var(--gold);
+      color: var(--gold-ink);
       font-weight: 600;
       flex: 0 0 96px;
     }
@@ -529,7 +521,7 @@
       font-size: 0.75rem;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--gray-500);
+      color: var(--muted);
       margin-bottom: 20px;
       font-family: system-ui, sans-serif;
     }
@@ -546,12 +538,12 @@
       color: var(--gray-700);
       font-size: 0.85rem;
       border-radius: 2px;
-      transition: all 0.3s;
+      transition: background-color 0.2s, color 0.2s;
     }
-    
+
     .other-work-list span:hover {
       background: var(--charcoal);
-      color: var(--gold);
+      color: var(--gold-ink);
     }
     
     /* Skills */
@@ -561,11 +553,11 @@
       gap: 40px;
     }
     
-    .skill-category h4 {
+    .skill-category h3 {
       font-size: 0.75rem;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--gold-ink);
       margin-bottom: 20px;
       font-family: system-ui, sans-serif;
     }
@@ -577,9 +569,9 @@
       border-bottom: 1px solid var(--gray-100);
       font-size: 0.95rem;
       color: var(--gray-700);
-      transition: all 0.3s;
+      transition: color 0.2s, padding-left 0.25s var(--ease-out), border-color 0.2s;
     }
-    
+
     .skill-list li:hover {
       color: var(--charcoal);
       padding-left: 8px;
@@ -594,8 +586,6 @@
       text-align: center;
     }
     
-    .contact-section .section-label { color: var(--gold); }
-    
     .contact-section h2 {
       font-size: 2.5rem;
       font-weight: 400;
@@ -603,7 +593,7 @@
     }
     
     .contact-section p {
-      color: var(--gray-500);
+      color: var(--muted);
       margin-bottom: 40px;
     }
     
@@ -620,23 +610,25 @@
       padding: 16px 32px;
       background: transparent;
       border: 1px solid var(--gold);
-      color: var(--gold);
+      color: var(--gold-ink);
       text-decoration: none;
       font-size: 0.9rem;
       letter-spacing: 1px;
-      transition: all 0.3s;
+      transition: background-color 0.2s, color 0.2s, transform 0.16s var(--ease-out);
       font-family: system-ui, sans-serif;
     }
-    
+
     .contact-btn:hover {
       background: var(--gold);
       color: var(--charcoal);
     }
+
+    .contact-btn:active { transform: scale(0.97); }
     
     /* Footer */
     footer {
       background: var(--charcoal);
-      color: var(--gray-500);
+      color: var(--muted);
       text-align: center;
       padding: 24px;
       font-size: 0.85rem;
@@ -650,13 +642,20 @@
     }
     
     .hero-content > * {
-      animation: fadeInUp 0.8s ease forwards;
+      animation: fadeInUp 0.6s var(--ease-out) both;
     }
-    
-    .hero-content > *:nth-child(1) { animation-delay: 0.1s; }
-    .hero-content > *:nth-child(2) { animation-delay: 0.2s; }
-    .hero-content > *:nth-child(3) { animation-delay: 0.3s; }
-    .hero-content > *:nth-child(4) { animation-delay: 0.5s; }
+
+    .hero-content > *:nth-child(1) { animation-delay: 0.05s; }
+    .hero-content > *:nth-child(2) { animation-delay: 0.12s; }
+    .hero-content > *:nth-child(3) { animation-delay: 0.19s; }
+    .hero-content > *:nth-child(4) { animation-delay: 0.26s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .section { opacity: 1; transform: none; transition: none; }
+      .hero-content > *, .hero-photo { animation: none; }
+      .project-card:hover { transform: none; }
+    }
   </style>
 </head>
 <body>
@@ -687,24 +686,23 @@
   <section class="hero">
     <div class="container hero-inner">
       <div class="hero-content">
-        <div class="hero-label">Data Engineer → ML Engineer</div>
         <h1>Building the bridge from <span>raw data</span> to <span>intelligent systems</span></h1>
-        <p class="hero-subtitle">I'm Nikhil Kudupudi — transforming complex data challenges into scalable ML pipelines. Currently pursuing my Master's at Northeastern, most recently building AWS data pipelines as a Data Engineer at Plymouth Rock Assurance.</p>
+        <p class="hero-subtitle">I'm Nikhil Kudupudi, a data engineer on the way to ML engineering — transforming complex data challenges into scalable ML pipelines. Currently pursuing my Master's at Northeastern, most recently building AWS data pipelines as a Data Engineer at Plymouth Rock Assurance.</p>
         <div class="metrics">
           <div class="metric-item">
-            <h3>20M+</h3>
+            <div class="metric-value">20M+</div>
             <p>Records Matched</p>
           </div>
           <div class="metric-item">
-            <h3>88+</h3>
+            <div class="metric-value">88+</div>
             <p>Fintech Clients</p>
           </div>
           <div class="metric-item">
-            <h3>+25%</h3>
+            <div class="metric-value">+25%</div>
             <p>Workflow Automation</p>
           </div>
           <div class="metric-item">
-            <h3>2.5+</h3>
+            <div class="metric-value">2.5+</div>
             <p>Years Experience</p>
           </div>
         </div>
@@ -718,7 +716,6 @@
 
   <section class="section" id="journey">
     <div class="container">
-      <p class="section-label">Experience</p>
       <h2>From Data Pipelines to Machine Learning</h2>
       
       <div class="timeline">
@@ -821,7 +818,6 @@
 
   <section class="section" id="education">
     <div class="container">
-      <p class="section-label">Education</p>
       <h2>The academic foundation</h2>
 
       <div class="timeline">
@@ -859,13 +855,12 @@
 
   <section class="section" id="projects">
     <div class="container">
-      <p class="section-label">Selected Work</p>
       <h2>Projects that tell the story</h2>
       
       <div class="projects-grid">
         <div class="project-card">
-          <div class="project-label">Data Engineering · Financial Analytics</div>
           <h3>SEC EDGAR Financial Lakehouse</h3>
+          <div class="project-label">Data Engineering · Financial Analytics</div>
           <p>An end-to-end medallion pipeline that turns SEC XBRL filings (10-K / 10-Q) into executive KPIs such as revenue, margins, free cash flow and net worth. Every number on the Streamlit dashboard traces back to its source filing, and restated figures automatically override the originals.</p>
           <div class="arch-flow">
             <span>SEC EDGAR API</span><span class="arrow">→</span><span>Bronze</span><span class="arrow">→</span><span>Silver</span><span class="arrow">→</span><span>Gold</span><span class="arrow">→</span><span>Streamlit</span>
@@ -901,8 +896,8 @@
         </div>
 
         <div class="project-card">
-          <div class="project-label">AI Systems · LLM Agents · Edge Full-Stack</div>
           <h3>Job Copilot</h3>
+          <div class="project-label">AI Systems · LLM Agents · Edge Full-Stack</div>
           <p>Paste a job description and get an honest fit score, a tailored one-page resume as both PDF and editable .docx, then one click archives the exact file you reviewed and logs the application to the Google Sheet the tracker dashboard already reads. Two LLM agents run on Cloudflare Pages Functions, while the documents render in the browser — so the bytes previewed are the bytes archived.</p>
           <div class="arch-flow">
             <span>Job Posting</span><span class="arrow">→</span><span>Extract Agent</span><span class="arrow">→</span><span>Deterministic Scorer</span><span class="arrow">→</span><span>Tailor Agent</span><span class="arrow">→</span><span>PDF / DOCX</span><span class="arrow">→</span><span>R2 + Sheets</span>
@@ -940,8 +935,8 @@
         </div>
 
         <div class="project-card">
-          <div class="project-label">Data Engineering</div>
           <h3>Real-Time News Analytics</h3>
+          <div class="project-label">Data Engineering</div>
           <p>End-to-end streaming pipeline with dynamic topic ingestion, sentiment analysis, and multi-platform visualizations for actionable market insights.</p>
           <div class="arch-flow">
             <span>Kafka</span><span class="arrow">→</span><span>Spark Streaming</span><span class="arrow">→</span><span>NLP Engine</span><span class="arrow">→</span><span>Delta Lake</span><span class="arrow">→</span><span>Dashboard</span>
@@ -956,8 +951,8 @@
         </div>
         
         <div class="project-card">
-          <div class="project-label">MLOps · AI Systems</div>
           <h3>Modular RAG Application</h3>
+          <div class="project-label">MLOps · AI Systems</div>
           <p>Scalable, Dockerized NLP chatbot with configurable content sources. GCP-native architecture with orchestrated pipelines and real-time retrieval.</p>
           <div class="arch-flow">
             <span>Sources</span><span class="arrow">→</span><span>Prefect</span><span class="arrow">→</span><span>Embeddings</span><span class="arrow">→</span><span>Vector Store</span><span class="arrow">→</span><span>Streamlit</span>
@@ -972,8 +967,8 @@
         </div>
         
         <div class="project-card">
-          <div class="project-label">Data Engineering</div>
           <h3>Reddit Data Pipeline</h3>
+          <div class="project-label">Data Engineering</div>
           <p>PRAW-powered ETL processing thousands of daily records with AWS infrastructure, automated cataloging, and BI-ready analytics tables.</p>
           <div class="arch-flow">
             <span>PRAW</span><span class="arrow">→</span><span>Airflow</span><span class="arrow">→</span><span>S3</span><span class="arrow">→</span><span>Glue</span><span class="arrow">→</span><span>Redshift</span><span class="arrow">→</span><span>BI</span>
@@ -988,8 +983,8 @@
         </div>
         
         <div class="project-card">
-          <div class="project-label">ML · Orchestration</div>
           <h3>Time-Series Forecasting</h3>
+          <div class="project-label">ML · Orchestration</div>
           <p>Modular forecasting pipeline with automated feature engineering, multiple model variants, and anomaly detection for market trend analysis.</p>
           <div class="arch-flow">
             <span>APIs</span><span class="arrow">→</span><span>PostgreSQL</span><span class="arrow">→</span><span>Features</span><span class="arrow">→</span><span>Models</span><span class="arrow">→</span><span>Dashboard</span>
@@ -1004,8 +999,8 @@
         </div>
         
         <div class="project-card">
-          <div class="project-label">Analytics · Visualization</div>
           <h3>Bank Churn Analysis</h3>
+          <div class="project-label">Analytics · Visualization</div>
           <p>Comprehensive analytics workflow identifying high-risk customers through EDA, feature analysis, and interactive dashboards for retention strategies.</p>
           <div class="arch-flow">
             <span>Data</span><span class="arrow">→</span><span>EDA</span><span class="arrow">→</span><span>Feature Analysis</span><span class="arrow">→</span><span>Segmentation</span><span class="arrow">→</span><span>Tableau</span>
@@ -1033,12 +1028,11 @@
 
   <section class="section" id="skills">
     <div class="container">
-      <p class="section-label">Toolkit</p>
       <h2>The technical foundation</h2>
       
       <div class="skills-container">
         <div class="skill-category">
-          <h4>Data Engineering</h4>
+          <h3>Data Engineering</h3>
           <ul class="skill-list">
             <li>Apache Kafka</li>
             <li>Spark / PySpark</li>
@@ -1049,7 +1043,7 @@
         </div>
         
         <div class="skill-category">
-          <h4>ML & Analytics</h4>
+          <h3>ML & Analytics</h3>
           <ul class="skill-list">
             <li>Scikit-learn</li>
             <li>XGBoost</li>
@@ -1061,7 +1055,7 @@
         </div>
 
         <div class="skill-category">
-          <h4>AI Engineering</h4>
+          <h3>AI Engineering</h3>
           <ul class="skill-list">
             <li>RAG Architecture</li>
             <li>LLM Applications</li>
@@ -1076,7 +1070,7 @@
         </div>
         
         <div class="skill-category">
-          <h4>Cloud & DevOps</h4>
+          <h3>Cloud & DevOps</h3>
           <ul class="skill-list">
             <li>AWS</li>
             <li>GCP (Cloud Run)</li>
@@ -1089,7 +1083,7 @@
         </div>
 
         <div class="skill-category">
-          <h4>Languages &amp; Backend</h4>
+          <h3>Languages &amp; Backend</h3>
           <ul class="skill-list">
             <li>Python</li>
             <li>SQL</li>
@@ -1105,7 +1099,6 @@
 
   <section class="contact-section" id="contact">
     <div class="container">
-      <p class="section-label">Let's Connect</p>
       <h2>Building something interesting?</h2>
       <p>I'm always open to discussing data engineering, MLOps, or new opportunities.</p>
       <div class="contact-links">
